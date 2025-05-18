@@ -1,0 +1,281 @@
+/* Importa fuentes Poppins (600, 800) y Roboto (400, 700) desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Roboto:wght@400;700&display=swap');
+
+/* Estilos base para el cuerpo: fuente Roboto y fondo degradado suave */
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa, #e4e9f0);
+  margin: 0;
+  padding: 0;
+  color: #2c3e50;
+}
+
+/* Contenedor principal con fondo blanco, bordes redondeados y sombra suave */
+.container {
+  max-width: 900px;
+  background: #ffffff;
+  margin: 70px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  padding: 50px 60px;
+  border: 1px solid #d3d9e6;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto hover para levantar el contenedor y resaltar sombra */
+.container:hover {
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+/* Título principal centrado con fuente Poppins negrita y sombra */
+h1 {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  margin-bottom: 24px;
+  font-size: 3rem;
+  color: #2c3e50;
+  letter-spacing: 1.5px;
+  text-shadow: 1px 1px 3px rgba(74, 90, 135, 0.3);
+}
+
+/* Subtítulo centrado, semi-negrita, con transición de color */
+p.subtitle {
+  text-align: center;
+  color: #555f77;
+  margin-top: 0;
+  margin-bottom: 45px;
+  font-size: 1.25rem;
+  letter-spacing: 0.6px;
+  transition: color 0.3s ease;
+  font-weight: 600;
+}
+
+/* Cambia color del subtítulo al pasar mouse */
+p.subtitle:hover {
+  color: #3a4a6b;
+}
+
+/* Tabla con ancho completo, bordes colapsados y margen inferior */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Celdas con padding y línea inferior sutil */
+th, td {
+  padding: 18px 16px;
+  border-bottom: 1px solid #e1e6f0;
+  transition: background-color 0.25s ease;
+}
+
+/* Encabezados de tabla: fondo azul oscuro, texto claro, mayúsculas */
+th {
+  background: #4a5a87;
+  font-weight: 700;
+  text-align: left;
+  color: #f0f4ff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: inset 0 -2px 5px rgba(255, 255, 255, 0.15);
+}
+
+/* Cambio de fondo al pasar mouse sobre fila */
+tr:hover {
+  background-color: #f4f7ff;
+}
+
+/* Celda con clase activity usa fuente Poppins y color azul grisáceo */
+td.activity {
+  font-weight: 700;
+  color: #3a4a6b;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Celda con puntos con estilo dorado y centrado */
+td.points {
+  font-weight: 800;
+  text-align: center;
+  color: #b06a14;
+  letter-spacing: 1.2px;
+  font-size: 1.15rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Celda para grupo de radios centrada */
+td.radio-group {
+  text-align: center;
+}
+
+/* Radios con tamaño y color de acento, animación al hover */
+input[type="radio"] {
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  accent-color: #4a5a87;
+  transition: transform 0.15s ease;
+}
+
+/* Escala radio al pasar mouse */
+input[type="radio"]:hover {
+  transform: scale(1.2);
+}
+
+/* Labels con márgenes, negrita y cursor pointer */
+label {
+  margin-left: 12px;
+  margin-right: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  color: #3a4a6b;
+  transition: color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Cambia color del label al pasar mouse */
+label:hover {
+  color: #4a5a87;
+}
+
+/* Botón principal con degradado azul, sombra y transición */
+button {
+  background: linear-gradient(135deg, #4a5a87, #6373b8);
+  border: none;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.4rem;
+  padding: 18px 0;
+  width: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(74, 90, 135, 0.6);
+  transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+  margin-top: 50px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Efecto hover para el botón: color más oscuro y sombra más intensa */
+button:hover {
+  background: linear-gradient(135deg, #3a4570, #4f5a9c);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(49, 65, 115, 0.85);
+}
+
+/* Contenedor resultado con diseño flex, color y borde que varían según resultado */
+.result-container {
+  margin-top: 70px;
+  padding: 45px 55px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border-left: 10px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Estilo para resultado positivo (verde) */
+.result-container.pass {
+  background: #d0e9d8;
+  color: #1b4d20;
+  border-left-color: #2e7d32;
+  text-shadow: 0 1px 1px rgba(46, 125, 50, 0.4);
+}
+
+/* Estilo para resultado negativo (rojo) */
+.result-container.fail {
+  background: #f9d6d6;
+  color: #7f1d1d;
+  border-left-color: #b71c1c;
+  text-shadow: 0 1px 1px rgba(183, 28, 28, 0.5);
+}
+
+/* Texto grande y ultra negrita dentro del resultado */
+.result-text {
+  font-size: 2.3rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* Caja para retroalimentación detallada con sombra y borde degradado */
+.feedback-box {
+  background: #fafafa;
+  color: #1c2533;
+  padding: 70px 60px;
+  border-radius: 18px;
+  margin-top: 70px;
+  width: 100%;
+  max-width: 1100px;
+  font-size: 24px;
+  min-height: 540px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+  line-height: 2.1;
+  margin-left: auto;
+  margin-right: auto;
+  border-left: 14px solid;
+  border-image: linear-gradient(135deg, #4a5a87, #6373b8) 1;
+  font-family: 'Poppins', sans-serif;
+  white-space: pre-wrap;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Sombra más pronunciada al pasar mouse sobre retroalimentación */
+.feedback-box:hover {
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* Iconos tamaño grande */
+.icon {
+  font-size: 2.6rem;
+}
+
+/* Icono positivo verde con sombra */
+.icon.pass {
+  color: #2e7d32;
+  filter: drop-shadow(0 1px 1px rgba(46, 125, 50, 0.5));
+}
+
+/* Icono negativo rojo con sombra */
+.icon.fail {
+  color: #b71c1c;
+  filter: drop-shadow(0 1px 1px rgba(183, 28, 28, 0.6));
+}
+
+/* Ajustes responsivos para pantallas menores a 768px */
+@media (max-width: 768px) {
+  .container {
+    margin: 25px;
+    padding: 40px 35px;
+  }
+
+  th, td {
+    padding: 16px 14px;
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 1.2rem;
+    padding: 16px 0;
+  }
+
+  .feedback-box {
+    padding: 50px 40px;
+    font-size: 20px;
+    min-height: 420px;
+  }
+}
