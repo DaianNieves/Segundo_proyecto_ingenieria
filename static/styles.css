@@ -7,21 +7,18 @@ body {
   background: linear-gradient(135deg, #f5f7fa, #e4e9f0);
   margin: 0;
   padding: 0;
-  color: #2c3e50;
+  color: #002c58;
 }
 
 /* Contenedor principal con fondo blanco, bordes redondeados y sombra suave */
 .container {
   max-width: 900px;
-  background: #ffffff;
+  background: #fff;
   margin: 70px auto;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  padding: 50px 60px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  padding: 40px 50px;
   border: 1px solid #d3d9e6;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  position: relative;
-  overflow: hidden;
 }
 
 /* Efecto hover para levantar el contenedor y resaltar sombra */
@@ -91,6 +88,15 @@ tr:hover {
   background-color: #f4f7ff;
 }
 
+/* Alternar color de fondo para filas pares e impares */
+tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* blanco */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9fbff; /* muy suave azul */
+}
+
 /* Celda con clase activity usa fuente Poppins y color azul grisáceo */
 td.activity {
   font-weight: 700;
@@ -129,8 +135,8 @@ input[type="radio"]:hover {
 
 /* Labels con márgenes, negrita y cursor pointer */
 label {
-  margin-left: 12px;
-  margin-right: 24px;
+  margin-left: 8px;
+  margin-right: 20px;
   font-weight: 700;
   cursor: pointer;
   user-select: none;
@@ -157,125 +163,202 @@ button {
   cursor: pointer;
   box-shadow: 0 6px 20px rgba(74, 90, 135, 0.6);
   transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
-  margin-top: 50px;
-  position: relative;
-  overflow: hidden;
   font-family: 'Poppins', sans-serif;
+  letter-spacing: 1.2px;
 }
 
-/* Efecto hover para el botón: color más oscuro y sombra más intensa */
+/* Efecto hover para el botón */
 button:hover {
-  background: linear-gradient(135deg, #3a4570, #4f5a9c);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(49, 65, 115, 0.85);
+  background: linear-gradient(135deg, #3a4a6b, #5260a5);
+  box-shadow: 0 10px 25px rgba(82, 96, 165, 0.75);
+  transform: translateY(-3px);
 }
 
-/* Contenedor resultado con diseño flex, color y borde que varían según resultado */
+/* Resultado general */
 .result-container {
-  margin-top: 70px;
-  padding: 45px 55px;
-  border-radius: 16px;
-  font-weight: 800;
-  font-size: 2rem;
+  border-radius: 12px;
+  padding: 20px 28px;
+  margin-top: 30px;
+  font-weight: 700;
+  font-size: 1.7rem;
+  letter-spacing: 1.2px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  border-left: 10px solid transparent;
-  text-transform: uppercase;
-  letter-spacing: 1.4px;
+  gap: 15px;
+  border: 2px solid transparent;
+  user-select: none;
   font-family: 'Poppins', sans-serif;
 }
 
-/* Estilo para resultado positivo (verde) */
+/* Ícono y color para aprobado */
 .result-container.pass {
-  background: #d0e9d8;
-  color: #1b4d20;
-  border-left-color: #2e7d32;
-  text-shadow: 0 1px 1px rgba(46, 125, 50, 0.4);
+  background-color: #e3f6e7;
+  color: #1b5e20;
+  border-color: #66bb6a;
 }
 
-/* Estilo para resultado negativo (rojo) */
+/* Ícono y color para no aprobado */
 .result-container.fail {
-  background: #f9d6d6;
-  color: #7f1d1d;
-  border-left-color: #b71c1c;
-  text-shadow: 0 1px 1px rgba(183, 28, 28, 0.5);
+  background-color: #fdecea;
+  color: #c62828;
+  border-color: #ef5350;
 }
 
-/* Texto grande y ultra negrita dentro del resultado */
-.result-text {
-  font-size: 2.3rem;
-  font-weight: 900;
-  letter-spacing: 1.5px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.12);
+/* Ícono dentro del resultado */
+.result-container .icon {
+  font-size: 3.8rem;
+  user-select: none;
 }
 
-/* Caja para retroalimentación detallada con sombra y borde degradado */
-.feedback-box {
-  background: #fafafa;
-  color: #1c2533;
-  padding: 70px 60px;
-  border-radius: 18px;
-  margin-top: 70px;
-  width: 100%;
-  max-width: 1100px;
-  font-size: 24px;
-  min-height: 540px;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
-  line-height: 2.1;
-  margin-left: auto;
-  margin-right: auto;
-  border-left: 14px solid;
-  border-image: linear-gradient(135deg, #4a5a87, #6373b8) 1;
+/* Texto dentro del resultado */
+.result-container .result-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Texto de puntaje grande */
+.result-container .score {
+  font-size: 2.5rem;
+  color: #000000;
+  font-weight: 800;
+  letter-spacing: 2px;
+  user-select: text;
+}
+
+/* Contenedor feedback por actividad */
+.feedback-item {
+  margin-top: 26px;
+  padding: 18px 22px;
+  border: 1px solid #d1d8e6;
+  border-radius: 10px;
+  background: #f9fbff;
+  color: #344563;
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Título de la actividad dentro del feedback */
+.feedback-item strong {
+  display: block;
   font-family: 'Poppins', sans-serif;
-  white-space: pre-wrap;
-  transition: box-shadow 0.3s ease;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+  color: #2c3e50;
 }
 
-/* Sombra más pronunciada al pasar mouse sobre retroalimentación */
-.feedback-box:hover {
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.25);
+/* Bloque de información horizontal */
+.info-bloque {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 12px;
 }
 
-/* Iconos tamaño grande */
-.icon {
-  font-size: 2.6rem;
+/* Línea de información con icono y texto */
+.info-linea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
 }
 
-/* Icono positivo verde con sombra */
-.icon.pass {
-  color: #2e7d32;
-  filter: drop-shadow(0 1px 1px rgba(46, 125, 50, 0.5));
+/* Iconos para cumplido */
+.icon-cumplio {
+  font-size: 1.5rem;
+  user-select: none;
+  color: #2c7a2c;
 }
 
-/* Icono negativo rojo con sombra */
-.icon.fail {
-  color: #b71c1c;
-  filter: drop-shadow(0 1px 1px rgba(183, 28, 28, 0.6));
+/* Texto de cumplido */
+.cumplio-texto {
+  font-weight: 700;
+  color: #2c7a2c;
 }
 
-/* Ajustes responsivos para pantallas menores a 768px */
-@media (max-width: 768px) {
+/* Etiqueta puntaje */
+.puntaje-label {
+  font-weight: 700;
+  color: #b06a14;
+}
+
+/* Valor puntaje */
+.puntaje-valor {
+  font-weight: 800;
+  color: #b06a14;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15rem;
+}
+
+/* Bloque de retroalimentación */
+.retro-bloque {
+  margin-top: 10px;
+  border-left: 3px solid #6373b8;
+  padding-left: 14px;
+}
+
+/* Etiqueta de retroalimentación */
+.retro-label {
+  font-weight: 700;
+  color: #495d9b;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+/* Texto de retroalimentación */
+.retro-texto {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #344563;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  user-select: text;
+}
+
+/* Inputs de texto y número estilos */
+input[type="text"], input[type="number"] {
+  width: 90%;
+  padding: 6px 10px;
+  border: 1px solid #c3cbd9;
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #344563;
+  transition: border-color 0.25s ease;
+  box-sizing: border-box;
+}
+
+/* Efecto foco para inputs */
+input[type="text"]:focus, input[type="number"]:focus {
+  outline: none;
+  border-color: #6373b8;
+  box-shadow: 0 0 8px #6373b8aa;
+}
+
+/* Deshabilitar inputs de puntaje con fondo y color distinto */
+input[type="number"]:disabled {
+  background-color: #f0f3f8;
+  color: #a1a8bb;
+  cursor: not-allowed;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 720px) {
   .container {
-    margin: 25px;
-    padding: 40px 35px;
+    padding: 30px 20px;
   }
 
-  th, td {
-    padding: 16px 14px;
-    font-size: 1rem;
+  table, th, td {
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 2.4rem;
   }
 
   button {
     font-size: 1.2rem;
-    padding: 16px 0;
-  }
-
-  .feedback-box {
-    padding: 50px 40px;
-    font-size: 20px;
-    min-height: 420px;
   }
 }

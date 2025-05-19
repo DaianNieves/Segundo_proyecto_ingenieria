@@ -2,233 +2,62 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <!-- Hace que la página sea responsive para diferentes tamaños de pantalla -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  <title>Sistema Experto de Evaluación</title>
-  
-  <!-- Enlace al archivo CSS para los estilos, usando url_for de Flask -->
+  <title>Sistema Experto de Evaluación "Arturo López Ponce"</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
-  
   <script>
-    // Función asíncrona que se ejecuta al enviar el formulario para evaluar el proyecto
-    async function enviarEvaluacion() {
-      // Lista con los nombres de las actividades a evaluar
-      const actividades = [
-        "presentacion", "descripcion", "explicacion", "manejo", "resolucion",
-        "contacto_visual", "tono_voz", "organizacion", "responde_preguntas", "tiempo"
-      ];
-      
-      // Objeto para almacenar las respuestas del formulario
-      const datos = {};
-      
-      // Recorremos cada actividad para obtener si se seleccionó "si" o "no"
-      for (const act of actividades) {
-        // Buscamos el input radio que esté seleccionado para esta actividad
-        const si = document.querySelector(`input[name="${act}"]:checked`);
-        // Guardamos true si la respuesta es "si", false si es "no" o no seleccionado
-        datos[act] = si && si.value === "si";
-      }
-      
-      try {
-        // Enviamos los datos al servidor mediante POST en formato JSON
-        const resp = await fetch("/evaluate", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify(datos),
-        });
-        
-        // Esperamos la respuesta en formato JSON con el resultado
-        const result = await resp.json();
-        
-        // Obtenemos el contenedor donde mostraremos el resultado
-        const container = document.getElementById("resultado");
-        
-        // Extraemos el puntaje total recibido
-        const puntos = result.totalPuntos;
-        const minimo = 70;  // Puntaje mínimo para aprobar
-        const maximo = 100; // Puntaje máximo posible
-        
-        let html = "";
-        
-        // Si el puntaje es mayor o igual al mínimo, mostramos mensaje de aprobado
-        if (puntos >= minimo) {
-          html = `
-            <div class="result-container pass">
-              <span class="icon pass">✔️</span>
-              <div class="result-text">¡Proyecto aprobado!<br>Puntaje: ${puntos} / ${maximo}</div>
-            </div>
-            <pre class="feedback">${result.retroalimentacion}</pre>
-          `;
-        } else {
-          // Si no alcanza el mínimo, mensaje de no aprobado
-          html = `
-            <div class="result-container fail">
-              <span class="icon fail">❌</span>
-              <div class="result-text">Proyecto no aprobado.<br>Puntaje: ${puntos} / ${maximo}</div>
-            </div>
-            <pre class="feedback">${result.retroalimentacion}</pre>
-          `;
-        }
-        
-        // Insertamos el HTML generado dentro del contenedor resultado
-        container.innerHTML = html;
-        
-        // Hacemos scroll suave hacia el resultado para que el usuario lo vea
-        container.scrollIntoView({behavior: "smooth"});
-        
-      } catch (error) {
-        // Si ocurre un error en la petición, mostramos alerta con el mensaje
-        alert("Error al evaluar: " + error.message);
-      }
-    }
-  </script>
-</head>
+  const ponderaciones = {{ ponderaciones|tojson }};
+  const actividadesTexto = {{ actividades_texto|tojson }};
+</script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
+
+</head>
 <body>
-  <!-- Contenedor principal que agrupa todo el contenido visible -->
   <div class="container">
-    <h1>Sistema Experto de Evaluación</h1>
-    
-    <!-- Subtítulo con explicación del puntaje mínimo y máximo -->
+    <h1>Sistema Experto de Evaluación "Arturo López Ponce"</h1>
     <p class="subtitle">
       La calificación mínima aprobatoria es <strong>70 puntos</strong>. 
       La máxima puntuación es <strong>100 puntos</strong>.
     </p>
-    
-    <!-- Formulario con tabla para evaluar cada criterio -->
+
     <form onsubmit="event.preventDefault(); enviarEvaluacion();">
-      
       <table>
         <thead>
           <tr>
             <th>Actividad</th>
             <th style="text-align:center;">Sí</th>
             <th style="text-align:center;">No</th>
-            <th style="text-align:center;">Puntos</th>
+            <th style="text-align:center;">Puntaje</th>
+            <th style="text-align:center;">Retroalimentación</th>
           </tr>
         </thead>
-        
-        <tbody>
-          <!-- Cada fila corresponde a una actividad evaluable -->
-          
+
+          {% for clave, texto in actividades_texto.items() %}
           <tr>
-            <td class="activity">1. Presentación de cada integrante (Nombre completo).</td>
-            <td class="radio-group">
-              <input type="radio" name="presentacion" value="si" required>
+            <td class="activity">{{ texto }}</td>
+            <td class="radio-group" style="text-align:center;">
+              <input type="radio" name="{{ clave }}" value="si" id="{{ clave }}_si">
+              <label for="{{ clave }}_si">Sí</label>
             </td>
-            <td class="radio-group">
-              <input type="radio" name="presentacion" value="no">
+            <td class="radio-group" style="text-align:center;">
+              <input type="radio" name="{{ clave }}" value="no" id="{{ clave }}_no">
+              <label for="{{ clave }}_no">No</label>
             </td>
-            <td class="points">5</td>
+            <td class="points">
+              <input type="number" name="{{ clave }}_puntaje" min="0" max="{{ ponderaciones[clave] }}">
+              <span class="ponderacion">/ {{ ponderaciones[clave] }}</span>
+            </td>
+            <td class="points">
+              <input type="text" name="{{ clave }}_feedback" placeholder="Comentarios">
+            </td>
           </tr>
-          
-          <tr>
-            <td class="activity">2. Descripción del proyecto ante el grupo.</td>
-            <td class="radio-group">
-              <input type="radio" name="descripcion" value="si" required>
-            </td>
-            <td class="radio-group">
-              <input type="radio" name="descripcion" value="no">
-            </td>
-            <td class="points">5</td>
-          </tr>
-          
-          <tr>
-            <td class="activity">3. Explica el funcionamiento del proyecto de forma coherente y clara.</td>
-            <td class="radio-group">
-              <input type="radio" name="explicacion" value="si" required>
-            </td>
-            <td class="radio-group">
-              <input type="radio" name="explicacion" value="no">
-            </td>
-            <td class="points">30</td>
-          </tr>
-          
-          <tr>
-            <td class="activity">4. Maneja correctamente el sistema del proyecto.</td>
-            <td class="radio-group">
-              <input type="radio" name="manejo" value="si" required>
-            </td>
-            <td class="radio-group">
-              <input type="radio" name="manejo" value="no">
-            </td>
-            <td class="points">15</td>
-          </tr>
-          
-          <tr>
-            <td class="activity">5. Resuelve correctamente el proyecto.</td>
-            <td class="radio-group">
-              <input type="radio" name="resolucion" value="si" required>
-            </td>
-            <td class="radio-group">
-              <input type="radio" name="resolucion" value="no">
-            </td>
-            <td class="points">15</td>
-          </tr>
-          
-          <tr>
-            <td class="activity">6. Mantiene contacto visual durante la exposición.</td>
-            <td class="radio-group">
-              <input type="radio" name="contacto_visual" value="si" required>
-            </td>
-            <td class="radio-group">
-              <input type="radio" name="contacto_visual" value="no">
-            </td>
-            <td class="points">5</td>
-          </tr>
-          
-          <tr>
-            <td class="activity">7. Usa tono de voz adecuado y sin muletillas.</td>
-            <td class="radio-group">
-              <input type="radio" name="tono_voz" value="si" required>
-            </td>
-            <td class="radio-group">
-              <input type="radio" name="tono_voz" value="no">
-            </td>
-            <td class="points">5</td>
-          </tr>
-          
-          <tr>
-            <td class="activity">8. Organiza la presentación y mantiene la atención del grupo.</td>
-            <td class="radio-group">
-              <input type="radio" name="organizacion" value="si" required>
-            </td>
-            <td class="radio-group">
-              <input type="radio" name="organizacion" value="no">
-            </td>
-            <td class="points">5</td>
-          </tr>
-          
-          <tr>
-            <td class="activity">9. Responde preguntas correctamente.</td>
-            <td class="radio-group">
-              <input type="radio" name="responde_preguntas" value="si" required>
-            </td>
-            <td class="radio-group">
-              <input type="radio" name="responde_preguntas" value="no">
-            </td>
-            <td class="points">10</td>
-          </tr>
-          
-          <tr>
-            <td class="activity">10. Cumple con el tiempo planeado (16 a 20 minutos).</td>
-            <td class="radio-group">
-              <input type="radio" name="tiempo" value="si" required>
-            </td>
-            <td class="radio-group">
-              <input type="radio" name="tiempo" value="no">
-            </td>
-            <td class="points">5</td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
-      
-      <!-- Botón para enviar el formulario y calificar el proyecto -->
       <button type="submit">Calificar Proyecto</button>
     </form>
 
-    <!-- Aquí se mostrará el resultado de la evaluación -->
     <div id="resultado"></div>
   </div>
 </body>
